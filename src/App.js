@@ -5,11 +5,12 @@ class App extends Component {
   constructor(){
     super();
     this.handleChange = this.handleChange.bind(this)
+    this.runTests = this.runTests.bind(this)
     this.connect = this.connect.bind(this)
     this.state = {
       token: "5cb56f2e8b142fe4b59d41fc004b8f0ef549fa70fad7c9aae25475558a103426",
       labName: "nearest-neighbors-lab-data-science-pilot",
-      server: "staging-01.ide.learn.co",
+      server: "localhost",
       username: "StevenNunez",
       type: "jupyter",
       output: [],
@@ -18,6 +19,10 @@ class App extends Component {
 
   handleChange({target}){
     this.setState({[target.id]: target.value})
+  }
+
+  runTests(){
+    this.channel.push('run_tests')
   }
 
   connect() {
@@ -50,6 +55,16 @@ class App extends Component {
       console.log("Jupter ready", connection)
       this.setState({output: this.state.output.concat([JSON.stringify({"Jupyter Ready": connection})])})
     })
+
+    this.channel.on("test_output", ({output}) => {
+      console.log("Test Output", atob(output))
+      this.setState({output: this.state.output.concat([JSON.stringify({"Test Output": atob(output)})])})
+    })
+
+    this.channel.on("finished_running_tests", (result) => {
+      console.log("tests finished running")
+      this.setState({output: this.state.output.concat([JSON.stringify({"Finished Running Tests": result})])})
+    })
     this.channel.join()
   }
 
@@ -75,6 +90,7 @@ class App extends Component {
 
           <label htmlFor="server">Phoeyonce Server</label>
           <select id="server" name="server"value={this.state.server} onChange={this.handleChange}>
+            <option value="localhost">Local</option>
             <option value="staging-01.ide.learn.co">Staging 01</option>
             <option value="staging-02.ide.learn.co">Staging 02</option>
           </select>
@@ -84,6 +100,7 @@ class App extends Component {
             <option value="jupyter">Jupyter Test</option>
             <option value="session">IDE Test</option>
           </select>
+          {this.state.type === "jupyter" && <input type="button" value="Run Tests" onClick={this.runTests}/>}
           <input type="submit" value="Connect" onClick={this.connect}/>
         </div>
 
