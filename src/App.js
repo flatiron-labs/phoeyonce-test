@@ -9,10 +9,11 @@ class App extends Component {
     this.connect = this.connect.bind(this)
     this.state = {
       token: "5cb56f2e8b142fe4b59d41fc004b8f0ef549fa70fad7c9aae25475558a103426",
-      labName: "nearest-neighbors-lab-data-science-pilot",
+      //labName: "nearest-neighbors-lab-data-science-pilot",
+      labName: "sandbox",
       server: "localhost",
       username: "StevenNunez",
-      type: "jupyter",
+      type: "ide",
       output: [],
     }
   }
@@ -65,6 +66,15 @@ class App extends Component {
       console.log("tests finished running")
       this.setState({output: this.state.output.concat([JSON.stringify({"Finished Running Tests": result})])})
     })
+
+    this.channel.on("file_system_event", ({file_system_event}) => {
+      console.log("File System Event output")
+      this.setState({output: this.state.output.concat([JSON.stringify({"File System Event Output": atob(file_system_event)})])})
+    })
+    this.channel.on("terminal_output", ({terminal_output}) => {
+      console.log("Terminal output")
+      this.setState({output: this.state.output.concat([JSON.stringify({"Terminal Output": atob(terminal_output)})])})
+    })
     this.channel.join()
   }
 
@@ -98,7 +108,7 @@ class App extends Component {
           <label htmlFor="type">Phoeyonce Server</label>
           <select id="type" name="type"value={this.state.type} onChange={this.handleChange}>
             <option value="jupyter">Jupyter Test</option>
-            <option value="session">IDE Test</option>
+            <option value="ide">IDE Test</option>
           </select>
           {this.state.type === "jupyter" && <input type="button" value="Run Tests" onClick={this.runTests}/>}
           <input type="submit" value="Connect" onClick={this.connect}/>
