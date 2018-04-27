@@ -1,5 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { Socket } from 'phoenix'
+import { Terminal } from 'xterm'
+import 'xterm/dist/xterm.css'
+import * as fit from 'xterm/lib/addons/fit/fit';
+import * as WebfontLoader from 'xterm-webfont'
+
+Terminal.applyAddon(WebfontLoader)
+Terminal.applyAddon(fit);
 
 class App extends Component {
   constructor(){
@@ -7,6 +14,11 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.runTests = this.runTests.bind(this)
     this.connect = this.connect.bind(this)
+    this.terminal = new Terminal()
+    this.terminal.on('data', (data) => {
+      this.channel.push('terminal_input', {data: btoa(data)})
+    })
+
     this.state = {
       token: "5cb56f2e8b142fe4b59d41fc004b8f0ef549fa70fad7c9aae25475558a103426",
       //labName: "nearest-neighbors-lab-data-science-pilot",
@@ -16,6 +28,10 @@ class App extends Component {
       type: "ide",
       output: [],
     }
+  }
+  componentDidMount(){
+    this.terminal.open(document.getElementById('terminal'));
+    this.terminal.fit()
   }
 
   handleChange({target}){
@@ -73,7 +89,7 @@ class App extends Component {
     })
     this.channel.on("terminal_output", ({terminal_output}) => {
       console.log("Terminal output")
-      this.setState({output: this.state.output.concat([JSON.stringify({"Terminal Output": atob(terminal_output)})])})
+      this.terminal.write(atob(terminal_output))
     })
     this.channel.join()
   }
@@ -119,6 +135,7 @@ class App extends Component {
         </div>
 
         <div>
+          <div id='terminal'></div>
           <h2>Output</h2>
           {this.state.output.map((o) =>  <div>{o}</div> )}
         </div>
