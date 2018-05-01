@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Socket } from 'phoenix'
 import { Terminal } from 'xterm'
 import 'xterm/dist/xterm.css'
+import './App.css'
 import * as fit from 'xterm/lib/addons/fit/fit';
 import * as WebfontLoader from 'xterm-webfont'
 
@@ -20,11 +21,10 @@ class App extends Component {
     })
 
     this.state = {
-      token: "5cb56f2e8b142fe4b59d41fc004b8f0ef549fa70fad7c9aae25475558a103426",
-      //labName: "nearest-neighbors-lab-data-science-pilot",
+      token: "",
       labName: "sandbox",
       server: "localhost",
-      username: "StevenNunez",
+      username: "",
       type: "ide",
       output: [],
     }
@@ -100,32 +100,44 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="inputs">
-          <div>
-            Get this from your profile https://learn.co/StevenNunez
-          </div>
-          <label htmlFor="token">Learn Token</label>
-          <input type="text" id="token" value={this.state.token} onChange={this.handleChange}/>
-
-          <label htmlFor="labName">Lab Name</label>
-          <input type="text" id="labName" value={this.state.labName} onChange={this.handleChange}/>
-
-          <label htmlFor="username">Username</label>
-          <input type="text" id="username" value={this.state.username} onChange={this.handleChange}/>
-
-          <label htmlFor="server">Phoeyonce Server</label>
+      <div>
+        <h2>
+          Phoeyonce Test Client
+        </h2>
+        <h3>
+          This app provides a lightweight client to test the various Phoeyonce environments.
+        </h3>
+        <div>
+          Grab the token from your Learn profile https://learn.co/:github_username
+        </div>
+        <div className="form-field">
+          <label className="form-field__label" htmlFor="token">Learn Token</label>
+          <input className="form-field__input" type="text" id="token" value={this.state.token} onChange={this.handleChange}/>
+        </div>
+        <div className="form-field">
+          <label className="form-field__label" htmlFor="labName">Lab Name</label>
+          <input className="form-field__input" type="text" id="labName" value={this.state.labName} onChange={this.handleChange}/>
+        </div>
+        <div className="form-field">
+          <label className="form-field__label" htmlFor="username">Username</label>
+          <input className="form-field__input"type="text" id="username" value={this.state.username} onChange={this.handleChange}/>
+        </div>
+        <div className="form-field">
+          <label className="form-field__label" htmlFor="server">Phoeyonce Server</label>
           <select id="server" name="server"value={this.state.server} onChange={this.handleChange}>
             <option value="localhost">Local</option>
             <option value="staging-01.ide.learn.co">Staging 01</option>
             <option value="staging-02.ide.learn.co">Staging 02</option>
           </select>
-
-          <label htmlFor="type">Phoeyonce Server</label>
+        </div>
+        <div className="form-field">
+          <label className="form-field__label"  htmlFor="type">Phoeyonce Server</label>
           <select id="type" name="type"value={this.state.type} onChange={this.handleChange}>
             <option value="jupyter">Jupyter Test</option>
             <option value="ide">IDE Test</option>
           </select>
+        </div>
+        <div>
           {this.state.type === "jupyter" && <input type="button" value="Run Tests" onClick={this.runTests}/>}
           <input type="submit" value="Connect" onClick={this.connect}/>
         </div>

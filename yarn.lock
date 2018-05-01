@@ -2997,6 +2997,10 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.1"
     readable-stream "^2.0.4"
 
+fontfaceobserver@2.*:
+  version "2.0.13"
+  resolved "https://registry.yarnpkg.com/fontfaceobserver/-/fontfaceobserver-2.0.13.tgz#47adbb343261eda98cb44db2152196ff124d3221"
+
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
@@ -8231,6 +8235,12 @@ xml-name-validator@^2.0.1:
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
+
+xterm-webfont@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/xterm-webfont/-/xterm-webfont-1.0.1.tgz#36f1dbdb1da08a5240267a60b895fa2b0afb9f04"
+  dependencies:
+    fontfaceobserver "2.*"
 
 xterm@^3.3.0:
   version "3.3.0"
