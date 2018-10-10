@@ -21,10 +21,10 @@ class App extends Component {
     })
 
     this.state = {
-      token: "" || localStorage.getItem('token') ,
-      labName: "sandbox",
+      token: localStorage.getItem('token') ,
+      labName: localStorage.getItem('labName') || "sandbox",
       server: "localhost",
-      username: "",
+      username: localStorage.getItem('username'),
       type: "ide",
       output: [],
     }
