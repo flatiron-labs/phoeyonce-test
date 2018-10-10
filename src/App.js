@@ -21,7 +21,7 @@ class App extends Component {
     })
 
     this.state = {
-      token: "",
+      token: "" || localStorage.getItem('token') ,
       labName: "sandbox",
       server: "localhost",
       username: "",
@@ -35,6 +35,7 @@ class App extends Component {
   }
 
   handleChange({target}){
+    localStorage.setItem(target.id, target.value)
     this.setState({[target.id]: target.value})
   }
 
@@ -128,6 +129,10 @@ class App extends Component {
             <option value="localhost">Local</option>
             <option value="staging-01.ide.learn.co">Staging 01</option>
             <option value="staging-02.ide.learn.co">Staging 02</option>
+            <option value="sfo-01.ide.learn.co">SFO 01</option>
+            <option value="sfo-02.ide.learn.co">SFO 02</option>
+            <option value="sfo-03.ide.learn.co">SFO 03</option>
+            <option value="sfo-04.ide.learn.co">SFO 04</option>
           </select>
         </div>
         <div className="form-field">
