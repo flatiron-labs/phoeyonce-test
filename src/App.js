@@ -29,6 +29,46 @@ class App extends Component {
       output: [],
     }
   }
+
+  serverMap(){
+    return {
+      "Local": "localhost",
+      "Staging 01": "staging-01.ide.learn.co",
+      "Staging 02": "staging-02.ide.learn.co",
+      "NYC 01": "nyc-01.ide.learn.co",
+      "NYC 02": "nyc-02.ide.learn.co",
+      "NYC 03": "nyc-03.ide.learn.co",
+      "NYC 04": "nyc-04.ide.learn.co",
+      "NYC 05": "nyc-05.ide.learn.co",
+      "NYC 06": "nyc-06.ide.learn.co",
+      "NYC 07": "nyc-07.ide.learn.co",
+      "NYC 08": "nyc-08.ide.learn.co",
+      "NYC 09": "nyc-09.ide.learn.co",
+      "NYC 10": "nyc-10.ide.learn.co",
+      "NYC 11": "nyc-11.ide.learn.co",
+      "NYC 12": "nyc-12.ide.learn.co",
+      "NYC 13": "nyc-13.ide.learn.co",
+      "NYC 14": "nyc-14.ide.learn.co",
+      "NYC 15": "nyc-15.ide.learn.co",
+      "NYC 16": "nyc-16.ide.learn.co",
+      "SFO 01": "sfo-01.ide.learn.co",
+      "SFO 02": "sfo-02.ide.learn.co",
+      "SFO 03": "sfo-03.ide.learn.co",
+      "SFO 04": "sfo-04.ide.learn.co",
+      "SFO 05": "sfo-05.ide.learn.co",
+      "SFO 06": "sfo-06.ide.learn.co",
+      "SFO 07": "sfo-07.ide.learn.co",
+      "SFO 08": "sfo-08.ide.learn.co",
+      "FRA 01": "fra-01.ide.learn.co",
+      "FRA 02": "fra-02.ide.learn.co",
+      "FRA 03": "fra-03.ide.learn.co",
+      "FRA 04": "fra-04.ide.learn.co",
+      "FRA 05": "fra-05.ide.learn.co",
+      "FRA 06": "fra-06.ide.learn.co",
+      "FRA 07": "fra-07.ide.learn.co",
+      "FRA 08": "fra-08.ide.learn.co",
+    }
+  }
   componentDidMount(){
     this.terminal.open(document.getElementById('terminal'));
     this.terminal.fit()
@@ -126,13 +166,7 @@ class App extends Component {
         <div className="form-field">
           <label className="form-field__label" htmlFor="server">Phoeyonce Server</label>
           <select id="server" name="server"value={this.state.server} onChange={this.handleChange}>
-            <option value="localhost">Local</option>
-            <option value="staging-01.ide.learn.co">Staging 01</option>
-            <option value="staging-02.ide.learn.co">Staging 02</option>
-            <option value="sfo-01.ide.learn.co">SFO 01</option>
-            <option value="sfo-02.ide.learn.co">SFO 02</option>
-            <option value="sfo-03.ide.learn.co">SFO 03</option>
-            <option value="sfo-04.ide.learn.co">SFO 04</option>
+            {Object.keys(this.serverMap()).map(label => <option value={this.serverMap()[label]}>{label}</option> )}
           </select>
         </div>
         <div className="form-field">
